@@ -87,7 +87,17 @@ void mostrarRankingTop(int topN);
 int compararIgnorarCase(const char *a, const char *b);
 
 // ========== IMPLEMENTACAO DAS FUNCOES AUXILIARES ==========
+// Exibir imagem ASCII
+void mostrar_ascii(const char *caminho) {
+    FILE *arquivo = fopen(caminho, "r");
+    
+    char linha[512];
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        printf("%s", linha);
+    }
 
+    fclose(arquivo);
+}
 // Limpa a tela 
 void limparTela()
 {
@@ -313,9 +323,10 @@ void menu()
     while (1)
     {
         limparTela();
-        printf("=====================================\n");
-        printf("  A BUSCA DO AMULETO SAGRADO\n");
-        printf("=====================================\n\n");
+//        printf("=====================================\n");
+//        printf("  A BUSCA DO AMULETO SAGRADO\n");
+//        printf("=====================================\n\n");
+        mostrar_ascii("imagens/titulo.txt");
 
         printf("1 - Iniciar Jogo\n");
         printf("2 - Sobre o Jogo\n");
@@ -332,14 +343,14 @@ void menu()
 
         if (escolha == 1)
         {
-            // pedir nome antes de iniciar
             pedirNomeJogador();
             introducao();
         }
         else if (escolha == 2)
         {
             limparTela();
-            printf("\n=== SOBRE O JOGO ===\n\n");
+//            printf("\n=== SOBRE O JOGO ===\n\n");]
+            mostrar_ascii("imagens/SOBRE.txt");
             printf("Um RPG de escolhas onde suas decisões importam.\n");
             printf("Três caminhos, três virtudes, múltiplos finais.\n");
             printf("Descubra a verdade sobre os heróis do passado.\n\n");
@@ -2656,15 +2667,13 @@ void calcularRanking()
         printf("Seu resultado foi salvo: %d pontos.\n\n", pontosTotal);
     }
 
-    // Mostra top 10
     mostrarRankingTop(10);
     pausar();
 
-    // Pergunta se jogador quer jogar novamente
     int escolha = 0;
     limparTela();
     printf("Deseja jogar novamente, %s ?\n", jogadorNome);
-    printf("1 - Sim (mesmo nome)\n2 - Sim (trocar nome)\n3 - Nao (voltar ao menu)\n");
+    printf("1 - Sim (mesmo jogador)\n2 - Sim (novo jogador)\n3 - Nao (voltar ao menu)\n");
     printf("Escolha: ");
     if (scanf("%d", &escolha) != 1)
     {
@@ -2676,7 +2685,7 @@ void calcularRanking()
 
     if (escolha == 1)
     {
-        introducao(); // reinicia mantendo nome
+        introducao(); // reinicia mantendo o mesmo jogador
         return;
     }
     else if (escolha == 2)
